@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+
+  app3:
+    image: mottythomas/hotel
+    ports:
+      - "7000:80"
+    networks:
+      - webnet
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://192.168.10.52:12201" # Logstash UDP input port
+        tag: "app3"
+
+  webapp:
+    image: mottythomas/ledger
+    ports:
+      - "7001:80"
+    networks:
+      - webnet
+    logging:
+      driver: gelf
+      options:
+        gelf-address: "udp://192.168.10.52:12201" # Logstash UDP input port
+        tag: "webapp"
+
+
+networks:
+  webnet:
+
